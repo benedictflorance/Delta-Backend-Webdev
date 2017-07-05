@@ -41,6 +41,7 @@ if(isset($_POST['submit'])){
         if(!empty($name)){      
             $file=file_get_contents($temp_name);
             }
+        $ext= pathinfo($name,PATHINFO_EXTENSION);
         }       
 	if($expiry=="1")
 		$expiry=strtotime("+1 minute");
@@ -68,6 +69,11 @@ if(isset($_POST['submit'])){
 	if(empty($title))
 		{$titleErr="Title should not be empty";
 		 $errors++;}
+	if(!($ext=="sh"||$ext=="bash"||$ext=="zsh"||$ext=="cs"||$ext=="csx"|$ext=="c"||$ext=="h"||$ext=="cpp"||$ext=="apacheconf"||$ext=="vhost"||$ext=="coffee"||$ext=="cson"||$ext=="iced"||$ext=="diff"||$ext=="patch"||$ext=="c++"||$ext=="h++"||$ext=="hh"||$ext=="html"||$ext=="xhtml"||$ext=="html"||$ext=="xml"||$ext=="http"||$ext=="ini"||$ext=="json"||$ext=="js"||$ext=="cfg"||$ext=="js"||$ext=="java"||$ext=="jsp"||$ext=="md"||$ext=="markdown"||$ext=="mdown"||$ext=="mdwn"||$ext=="mkd"||$ext=="mkdn"||$ext=="mkdown"||$ext=="mak"||$ext=="make"||$ext=="mkfile"||$ext=="mk"||$ext=="d"||$ext=="nginxconf"||$ext=="m"||$ext=="php"||$ext=="php3"||$ext=="php4"||$ext=="php5"||$ext=="phps"||$ext=="phpt"||$ext=="inc"||$ext=="pl"||$ext=="pm"||$ext=="perl"||$ext=="cgi"||$ext=="plx"||$ext=="py"||$ext=="gyp"||$ext=="wsgi"||$ext=="jruby"||$ext=="macruby"||$ext=="rake"||$ext=="rb"||$ext=="rbx"||$ext=="sql"||$ext=="mysql"||$ext=="sh-session"||$ext=="ps1"||$ext=="doc"||$ext=="docx"||$ext=="txt"||$ext=="css"))
+	{
+		$fileErr="Invalid file format. Try again.";
+		$errors++;
+	}
 	if(!$errors)
 	{
 	$sql =$conn->prepare("INSERT INTO snippet(title,code,username,public,anonymous,language,expiry,filename,url) VALUES(?,?,?,?,?,?,?,?,?)");
@@ -76,8 +82,8 @@ if(isset($_POST['submit'])){
 	$submitErr="Pasted successfully. Paste can be viewed at ".$_SERVER['HTTP_HOST']."/".$url ;
 	}
 }
-	echo "<a href =\"logout.php\" id=\"button\" class=\"green logout right\">Logout</a>
-	<h1>TinyPaste &copy</h1><h5>#1 paste tool since 2017</h5><h2>Welcome, ".ucwords($_SESSION['name'])."!</h2>
+	echo "<a href =\"logout.php\" id=\"button\" class=\"green left\">Logout</a><a href =\"list.php\" id=\"button\" class=\"green right\">List of Pastes</a>
+	<h1 class=\"push\">TinyPaste &copy</h1><h5 class=\"push\">#1 paste tool since 2017</h5><h2 >Welcome, ".ucwords($_SESSION['name'])."!</h2>
 	<form action=\"";echo htmlentities($_SERVER["PHP_SELF"]);echo "\" method=\"post\" enctype=\"multipart/form-data\">
 	<h2>New Paste</h2>
 	<span class=\"success\">";echo $submitErr;echo "</span><br>
@@ -131,5 +137,5 @@ if(isset($_POST['submit'])){
 
 }
 else
-	echo "<h1>Access Denied</h2><br><a id=\"button\" class=\"green push\" href=\"login.php\">Click here to log in</a></div></div></body></html>";
+	echo "<h1>Access Denied</h2><br><a id=\"button\" class=\"green\" href=\"login.php\">Click here to log in</a></div></div></body></html>";
 ?>
