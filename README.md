@@ -1,4 +1,4 @@
-#Instructions to run the files
+# Instructions to run the files
 
 1. Install and setup WAMP Server
 2. Create MySQL Account with username "root" and password "phpiscool"
